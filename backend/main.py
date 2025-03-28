@@ -3,7 +3,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from Routes.auth import router as auth_router
-
+from Routes.menu import router as menu_router
 app = FastAPI()
 
 origins = [
@@ -14,12 +14,12 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,         # allow your React frontend
     allow_credentials=True,
-    allow_methods=["POST", "OPTIONS"],  # explicitly allow POST and OPTIONS
+    allow_methods=["*"],  # explicitly allow POST and OPTIONS
     allow_headers=["*"],
 )
 
 app.include_router(auth_router)
-
+app.include_router(menu_router)
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the FastAPI + MongoDB backend!"}

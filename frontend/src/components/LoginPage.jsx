@@ -26,7 +26,7 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
+  
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -35,18 +35,18 @@ const LoginPage = () => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
-
+  
       if (!response.ok) {
         const errorMessage =
           data.detail || `Login failed with status: ${response.status}`;
         throw new Error(errorMessage);
       }
-
-      // Optionally, you can store the token in localStorage:
-      // localStorage.setItem('access_token', data.access_token);
-
+  
+      // Store the token in localStorage
+      localStorage.setItem('access_token', data.access_token);
+  
       // Redirect to /home upon successful login
       navigate('/home');
     } catch (err) {
@@ -56,6 +56,7 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
